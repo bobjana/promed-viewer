@@ -6,7 +6,7 @@
 		<meta http-equiv="Refresh" content="0; URL=login"/>
     </sec:ifNotLoggedIn>
 	<sec:ifLoggedIn>
-		<meta http-equiv="Refresh" content="0; URL=incident/list"/>
+		<meta http-equiv="Refresh" content="0; URL=incident"/>
 	</sec:ifLoggedIn>
 </head>
 </html>

@@ -18,7 +18,9 @@ class Incident {
             priority column: "PriorityDescription"
             customer column: "DebtorName"
             agent column: "CurrentAgentName"
+            agentEmail column: "CurrentAgentEmail"
             worker column: "WorkerName"
+//			incidentTypeGroup_id column: "IncidentTypeGroupID"
         }
     }
 
@@ -32,6 +34,8 @@ class Incident {
     String priority
     String customer
     String agent
+    String agentEmail
     String worker
+//	IncidentTypeGroup incidentTypeGroup
 
 }

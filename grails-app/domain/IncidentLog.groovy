@@ -11,10 +11,14 @@ class IncidentLog implements Serializable {
             incidentId column: "IncidentID"
             date column: "dActionDate"
             resolution column: "IncidentActionResolution"
+            type column: "ActionTypeDescription"
+            agent column: "ActionByAgentName"
         }
     }
 
     Date date
     String resolution
     long incidentId
+    String type
+    String agent
 }

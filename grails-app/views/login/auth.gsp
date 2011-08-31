@@ -19,9 +19,9 @@
 </head>
 
 <body>
+<div class="nav"><div class="navContent"></div></div>
 <div id="loginContainer">
     <div id="innerContainer">
-        <div class="nav">&nbsp;</div>
         <form action='${postUrl}' method='POST' id='loginForm' class='cssform' autocomplete='off'>
             <g:if test='${flash.message}'>
                 <div class="errors">${flash.message}</div>

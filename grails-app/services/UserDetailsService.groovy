@@ -1,13 +1,7 @@
-import org.springframework.security.core.context.SecurityContextHolder as SCH
-
 import org.codehaus.groovy.grails.plugins.springsecurity.GrailsUserDetailsService
 import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.authority.GrantedAuthorityImpl
 import org.springframework.security.core.userdetails.UsernameNotFoundException
-import org.springframework.security.web.authentication.AuthenticationProcessingFilter
-import org.springframework.security.web.authentication.WebAuthenticationDetails
-import javax.servlet.http.HttpServletRequest
 
 class UserDetailsService implements GrailsUserDetailsService {
 
@@ -27,12 +21,12 @@ class UserDetailsService implements GrailsUserDetailsService {
         Select cWorkerCode, cWorkerName, cRole, cPassword, idworkers from dtblWorkerPwd, _etblWorkers
             where iworkerid = idworkers
             and bActive = 1
-            and cWorkerCode = ${username}
+            and cWorkerName = ${username}
         """
         def userDetails = null
         sql.eachRow(userDetailsSQL,
             { data ->
-                userDetails = new UserDetails(data[0], springSecurityService.encodePassword(data[3]), true, true, true, true, getAuthorities(data[2]) ?: NO_ROLES, data[4], data[1])
+                userDetails = new UserDetails(data[1], springSecurityService.encodePassword(data[3]), true, true, true, true, getAuthorities(data[2]) ?: NO_ROLES, data[4], data[1])
             }
         )
         if (userDetails == null){
