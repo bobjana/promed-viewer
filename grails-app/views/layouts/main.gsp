@@ -22,12 +22,15 @@
         <r:layoutResources/>
 
         <jqui:resources themeCss="${resource(dir: 'css/themes/redmond', file: 'jquery-ui-1.8.11.custom.css')}"/>
-        %{--<jqui:resources/>--}%
         <link rel="stylesheet" href="${resource(dir:'css',file:'ui.jqgrid.css')}" />
 
+        <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
+
         <jqueryui:javascript />
+
         <g:javascript src="i18n/grid.locale-en.js"/>
         <g:javascript src="jquery.jqGrid.min.js"/>
+
 </head>
 <body>
 <div id=top_border></div>

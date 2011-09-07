@@ -31,12 +31,20 @@ class IncidentController {
                 df.format(it.createdOn),
                 df.format(it.dueBy),
                 it.incidentType,
+                it.incidentTypeGroup,
+                it.branch,
                 it.outline,
                 it.statusDescription,
                 it.priority,
                 it.customer,
                 it.agent,
-                it.agentEmail],
+                it.agentEmail,
+                it.customerContactPerson,
+                it.customerTel1,
+                it.customerTel2,
+                it.customerCell,
+                it.customerEmail
+                ],
             id: it.id]
         }
         def jsonData = [rows: jsonCells, page: currentPage, records: totalRows, total: numberOfPages]
@@ -94,6 +102,8 @@ class IncidentController {
                 between('dueBy',getStartDate(params.dueBy),getEndDate(params.dueBy))
             if (params.incidentType)
                 ilike('incidentType', params.incidentType + '%')
+            if (params.branch)
+                ilike('branch', params.branch + '%')
             if (params.outline)
                 ilike('outline', '%' + params.outline + '%')
             if (params.statusDescription)

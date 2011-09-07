@@ -4,7 +4,7 @@ class Incident {
     }
 
     static mapping = {
-        table "_rvIncidentsFull"
+        table "dsv_PromedIncidents"
         version false
         columns {
             id column: "IncidentId"
@@ -12,15 +12,21 @@ class Incident {
 			createdOn column: "IncidentCreatedDateStamp"
 			dueBy column: "DueByDate"
             incidentType column: "IncidentTypeDescription"
+            incidentTypeGroup column: "IncidentTypeGroup"
+            branch column: "IncidentCatDescription"
             outline column: "IncidentOutline"
             statusId column: "IncidentStatusID"
             statusDescription column: "IncidentStatusDescription"
             priority column: "PriorityDescription"
-            customer column: "DebtorName"
             agent column: "CurrentAgentName"
             agentEmail column: "CurrentAgentEmail"
             worker column: "WorkerName"
-//			incidentTypeGroup_id column: "IncidentTypeGroupID"
+            customer column: "DebtorName"
+            customerContactPerson column: "ContactPerson"
+            customerTel1 column: "Tel1"
+            customerTel2 column: "Tel2"
+            customerCell column: "Cell"
+            customerEmail column: "Email"
         }
     }
 
@@ -28,14 +34,23 @@ class Incident {
     Date createdOn
     Date dueBy
     String incidentType
+    String incidentTypeGroup
+    String branch
     String outline
     String statusId
     String statusDescription
     String priority
-    String customer
     String agent
     String agentEmail
     String worker
-//	IncidentTypeGroup incidentTypeGroup
+    String customer
+    String customerContactPerson
+    String customerTel1
+    String customerTel2
+    String customerCell
+    String customerEmail
+
+
+
 
 }

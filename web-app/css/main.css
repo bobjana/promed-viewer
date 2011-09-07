@@ -617,7 +617,7 @@ a.skip {
 
 #banner{
     margin: 0 auto;
-	max-width: 960px;
+	max-width: 1024px;
     overflow-x: hidden;
     /*-moz-box-shadow: 0 0 0.3em #255b17;*/
 	/*-webkit-box-shadow: 0 0 0.3em #255b17;*/
@@ -632,6 +632,7 @@ a.skip {
     width: 100%;
     display: inherit;
 }
+
 
 /*.scaffold-list h1 {*/
 	/*border: none;*/
