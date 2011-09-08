@@ -44,7 +44,8 @@ class IncidentController {
                 it.customerTel1,
                 it.customerTel2,
                 it.customerCell,
-                it.customerEmail
+                it.customerEmail,
+                it.attachment
                 ],
             id: it.id]
         }
@@ -93,8 +94,6 @@ class IncidentController {
             if (!session.showAll) {
                 ne('statusId', '3')
             }
-            println params.createdOn
-
             if (params.reference)
                 ilike('reference', params.reference + '%')
             if (params.createdOn)

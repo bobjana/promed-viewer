@@ -23,6 +23,13 @@
             return "<a href='' onclick='showCustomerDialog(this," + options.rowId + ");return false;'>" + cellvalue + "</a>"
         }
 
+        function attachmentFormatter(cellvalue, options, rowObject) {
+            if (rowObject[18]){
+                return "<a href='#' onclick='showAttachmentsDialog(this," + options.rowId + ");return false;'>download</a>"
+            }
+            return ""
+        }
+
         function showCustomerDialog(linkElement, id) {
             detail = customerDetailMap[id]
             //set values in dialog
@@ -40,6 +47,19 @@
             $('#jqdlgCustomer').dialog('open');
         }
 
+
+        function showAttachmentsDialog(linkElement, id) {
+            $.ajax({
+                type: "GET",
+                url: "${createLink(controller:'attachment', action:'list')}",
+                data: {id:id},
+                success: function(data) {
+                    $('#jqdlgAttachment').html(data)
+                    $('#jqdlgAttachment').dialog('open');
+                }
+            });
+        }
+
     </script>
 
 
@@ -51,12 +71,11 @@
 
     <style>
 
-        #jqdlgCustomer {
-            /*font-family: Lucida Grande, Lucida Sans, Arial, sans-serif;*/
+        .viewerDialog {
             font-size: 0.8em;
         }
 
-        #jqdlgCustomer td{
+        .viewerDialog td{
             padding-top: 2px;
         }
 
@@ -83,7 +102,7 @@
             $("#list2").jqGrid({
                 url:'incident/jq_incident_list',
                 datatype: "json",
-                colNames:['Ref#','Created On', 'Due By', 'Closed On', 'Type', 'Type Group','Branch','Outline','Status','Priority','Customer','Agent'],
+                colNames:['Ref#','Created On', 'Due By', 'Closed On', 'Type', 'Type Group','Branch','Outline','Status','Priority','Customer','Agent','Attachments'],
                 colModel:[
                     {name:'reference',index:'reference', width:65,formatter: referenceFormatter},
                     {name:'createdOn',index:'createdOn', width:80},
@@ -96,7 +115,8 @@
                     {name:'statusDescription',index:'statusDescription', width:80},
                     {name:'priority',index:'priority', width:80},
                     {name:'customer',index:'customer', width:150,formatter: customerFormatter},
-                    {name:'agent',index:'agent', width:100}
+                    {name:'agent',index:'agent', width:100},
+                    {name:'attachment',index:'attachment', width:80, formatter: attachmentFormatter}
                 ],
                 rowNum:10,
                 rowList:[10,20,50],
@@ -121,8 +141,8 @@
             // ]]>
         </script>
 
-
-         <div id="jqdlgCustomer">
+        %{--CUSTOMER DIALOG--}%
+         <div id="jqdlgCustomer" class="viewerDialog">
              <table>
                  <tbody>
                      <tr class="odd">
@@ -152,10 +172,15 @@
                  </tbody>
              </table>
          </div>
-
          <script type="text/javascript">
-        $('#jqdlgCustomer').dialog({ autoOpen: false, bgiframe: true, resizable: true, title: 'Customer Details', width: 400});
-    </script>
+            $('#jqdlgCustomer').dialog({ autoOpen: false, bgiframe: true, resizable: true, title: 'Customer Details', width: 400});
+         </script>
+
+         %{--ATTACHMENTS DIALOG--}%
+         <div id="jqdlgAttachment" class="viewerDialog"></div>
+         <script type="text/javascript">
+            $('#jqdlgAttachment').dialog({ autoOpen: false, bgiframe: true, resizable: true, title: 'Download Attachments', width: 600});
+         </script>
 
 
   </div>

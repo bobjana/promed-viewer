@@ -28,6 +28,7 @@ class Incident {
             customerTel2 column: "Tel2"
             customerCell column: "Cell"
             customerEmail column: "Email"
+            attachment column: "Attachments"
         }
     }
 
@@ -51,8 +52,6 @@ class Incident {
     String customerTel2
     String customerCell
     String customerEmail
-
-
-
+    boolean attachment
 
 }
