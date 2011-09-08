@@ -30,6 +30,7 @@ class IncidentController {
                 [it.reference,
                 df.format(it.createdOn),
                 df.format(it.dueBy),
+                (it.closedOn==null?"":df.format(it.closedOn)),
                 it.incidentType,
                 it.incidentTypeGroup,
                 it.branch,
@@ -100,6 +101,8 @@ class IncidentController {
                 between('createdOn',getStartDate(params.createdOn),getEndDate(params.createdOn))
             if (params.dueBy)
                 between('dueBy',getStartDate(params.dueBy),getEndDate(params.dueBy))
+            if (params.closedOn)
+                between('closedOn',getStartDate(params.closedOn),getEndDate(params.closedOn))
             if (params.incidentType)
                 ilike('incidentType', params.incidentType + '%')
             if (params.branch)

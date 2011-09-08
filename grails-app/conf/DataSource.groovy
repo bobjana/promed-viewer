@@ -4,7 +4,7 @@ dataSource {
     username = ""
     password = ""
     url = ""
-    logSql = true
+    logSql = false
 }
 
 hibernate {

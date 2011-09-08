@@ -3,7 +3,7 @@
 <head>
     <meta name="layout" content="main">
     <g:set var="entityName" value="${message(code: 'incident.label', default: 'Incident')}"/>
-    <title>Promed Incidents Viewer</title>
+    <title>Promed Incident Viewer</title>
 
     <script>
         var customerDetailMap = new Object();
@@ -19,7 +19,7 @@
         }
 
         function customerFormatter(cellvalue, options, rowObject) {
-            customerDetailMap[options.rowId] = [rowObject[9],rowObject[12],rowObject[13],rowObject[14],rowObject[15],rowObject[16]]
+            customerDetailMap[options.rowId] = [rowObject[9],rowObject[13],rowObject[14],rowObject[15],rowObject[16],rowObject[17]]
             return "<a href='' onclick='showCustomerDialog(this," + options.rowId + ");return false;'>" + cellvalue + "</a>"
         }
 
@@ -83,11 +83,12 @@
             $("#list2").jqGrid({
                 url:'incident/jq_incident_list',
                 datatype: "json",
-                colNames:['Ref#','Created On', 'Due By', 'Type', 'Type Group','Branch','Outline','Status','Priority','Customer','Agent'],
+                colNames:['Ref#','Created On', 'Due By', 'Closed On', 'Type', 'Type Group','Branch','Outline','Status','Priority','Customer','Agent'],
                 colModel:[
                     {name:'reference',index:'reference', width:65,formatter: referenceFormatter},
                     {name:'createdOn',index:'createdOn', width:80},
                     {name:'dueBy',index:'dueBy', width:80},
+                    {name:'ClosedOn',index:'closedOn', width:80},
                     {name:'incidentType',index:'incidentType', width:150},
                     {name:'incidentTypeGroup',index:'incidentTypeGroup', width:150},
                     {name:'branch',index:'branch', width:70},

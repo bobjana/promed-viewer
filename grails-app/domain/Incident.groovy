@@ -11,6 +11,7 @@ class Incident {
 			reference column: "InternalReference"
 			createdOn column: "IncidentCreatedDateStamp"
 			dueBy column: "DueByDate"
+            closedOn column: "CloseDate"
             incidentType column: "IncidentTypeDescription"
             incidentTypeGroup column: "IncidentTypeGroup"
             branch column: "IncidentCatDescription"
@@ -33,6 +34,7 @@ class Incident {
     String reference
     Date createdOn
     Date dueBy
+    Date closedOn
     String incidentType
     String incidentTypeGroup
     String branch
