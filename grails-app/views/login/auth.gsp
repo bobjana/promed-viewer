@@ -6,6 +6,7 @@
     #loginContainer {
         width: 350px;
         margin: 16px auto;
+        background: #fff;
     }
 
     #innerContainer {
@@ -15,44 +16,57 @@
         margin-top: 30px;
     }
 
+    .content {
+        background-repeat: no-repeat;
+        background-image: -moz-linear-gradient(center top, #DBEEFC, #FFF);
+        background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #DBEEFC), color-stop(1, #fff));
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#DBEEFC', endColorstr='#FFFFFF');
+        padding-top: 15px;
+        min-height: 100%;
+    }
+
     </style>
 </head>
 
 <body>
 <div class="nav"><div class="navContent"></div></div>
-<div id="loginContainer">
-    <div id="innerContainer">
-        <form action='${postUrl}' method='POST' id='loginForm' class='cssform' autocomplete='off'>
-            <g:if test='${flash.message}'>
-                <div class="errors">${flash.message}</div>
-            </g:if>
-            <table>
-                <tr>
-                    <td><label for='username'>Username</label></td>
-                    <td><input type='text' class='text_' name='j_username' id='username'/></td>
-                </tr>
-                <tr>
-                    <td><label for='password'>Password</label></td>
-                    <td><input type='password' class='text_' name='j_password' id='password'/></td>
-                </tr>
-                <tr>
-                    <td><label for='remember_me'>Remember me</label></td>
-                    <td><input type='checkbox' class='chk' name='${rememberMeParameter}' id='remember_me'
-                               <g:if test='${hasCookie}'>checked='checked'</g:if>/></td>
-                </tr>
-            </table>
+<div class="content">
+    <div id="loginContainer">
+        <div id="innerContainer">
+            <form action='${postUrl}' method='POST' id='loginForm' class='cssform' autocomplete='off'>
+                <g:if test='${flash.message}'>
+                    <div class="errors">${flash.message}</div>
+                </g:if>
+                <table>
+                    <tr>
+                        <td><label for='username'>Username</label></td>
+                        <td><input type='text' class='text_' name='j_username' id='username'/></td>
+                    </tr>
+                    <tr>
+                        <td><label for='password'>Password</label></td>
+                        <td><input type='password' class='text_' name='j_password' id='password'/></td>
+                    </tr>
+                    <tr>
+                        <td><label for='remember_me'>Remember me</label></td>
+                        <td><input type='checkbox' class='chk' name='${rememberMeParameter}' id='remember_me'
+                                   <g:if test='${hasCookie}'>checked='checked'</g:if>/></td>
+                    </tr>
+                </table>
 
-            <div class="buttons">
-                <input type='submit' value='Login'/>
-            </div>
-        </form>
+                <div class="buttons">
+                    <input type='submit' value='Login'/>
+                </div>
+            </form>
+        </div>
     </div>
+    <script type='text/javascript'>
+        <!--
+        (function() {
+            document.forms['loginForm'].elements['j_username'].focus();
+        })();
+        // -->
+    </script>
+
 </div>
-<script type='text/javascript'>
-    <!--
-    (function() {
-        document.forms['loginForm'].elements['j_username'].focus();
-    })();
-    // -->
-</script>
+
 </body>

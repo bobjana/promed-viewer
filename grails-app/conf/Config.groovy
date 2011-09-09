@@ -10,9 +10,18 @@
 //    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 // }
 
+
 grails.config.locations = [ "classpath:viewer-config.properties",
                            "file:${userHome}/viewer-config.properties"]
 
+def tomcat_dir = System.getenv("CATALINA_HOME")
+if (tomcat_dir){
+    def configFile = new File(tomcat_dir,"conf/viewer-config.properties")
+    if (configFile.exists()){
+        println "Using tomcat '${configFile}' conf file to configure viewer"
+        grails.config.locations << "file:" + configFile.getAbsolutePath()
+    }
+}
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 grails.mime.file.extensions = true // enables the parsing of file extensions from URLs into the request format
 grails.mime.use.accept.header = false
@@ -66,6 +75,10 @@ environments {
     production {
         grails.logging.jul.usebridge = false
         grails.serverURL = "http://www.changeme.com"
+
+        grails.plugins.springsecurity.portMapper.httpPort = "80"
+        grails.plugins.springsecurity.portMapper.httpsPort = "443"
+		grails.plugins.springsecurity.secureChannel.definition = ['/**': 'REQUIRES_SECURE_CHANNEL']
     }
 }
 
@@ -102,16 +115,9 @@ log4j = {
 
 grails.plugins.springsecurity.userLookup.userDomainClassName = 'User'
 grails.plugins.springsecurity.interceptUrlMap = [
-//		'/signup/**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
-//		'/login/**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
-//		'/dashboard/**': ['ROLE_USER', 'ROLE_ADMIN'],
-//		'/sessions/agent**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
-//		'/sessions/**': ['ROLE_USER'],
-//		'/filecategory/**': ['ROLE_ADMIN'],
-//		'/fileextensiontype/**': ['ROLE_ADMIN'],
-//		'/user/**': ['ROLE_ADMIN'],
-//		'/company/**': ['ROLE_ADMIN'],
         '/incident/**': ['ROLE_USER'],
+        '/attachment/**': ['ROLE_USER'],
+        '/incidentLog/**': ['ROLE_USER'],
         '/**': ['IS_AUTHENTICATED_ANONYMOUSLY']
 ]
 grails.plugins.springsecurity.securityConfigType = grails.plugins.springsecurity.SecurityConfigType.InterceptUrlMap

@@ -9,7 +9,7 @@
         var customerDetailMap = new Object();
 
         function toggleShowAll() {
-            parent.location = 'incident/toggleShowAll'
+            document.toggleForm.submit();
         }
 
         function referenceFormatter(cellvalue, options, rowObject) {
@@ -87,13 +87,31 @@
             padding: 0px;
         }
 
+        .content {
+            background-repeat: no-repeat;
+            background-image: -moz-linear-gradient(center top, #DBEEFC, #FFF);
+            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #DBEEFC), color-stop(1, #fff));
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#DBEEFC', endColorstr='#FFFFFF');
+            padding-top: 15px;
+            min-height: 100%;
+        }
+
+        .ui-jqgrid {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+
     </style>
 
 <div class="nav" role="navigation">
     <div class="navContent">
-        <g:checkBox name="showAll" checked="${session.showAll}" onclick="toggleShowAll()" value="Show All"/> Show All
+        <g:form method="post" controller="incident" action="toggleShowAll" name="toggleForm">
+            <g:checkBox name="showAll" checked="${session.showAll}" onclick="toggleShowAll()" value="Show All"/> Show All
+        </g:form>
     </div>
 </div>
+
      <div class="content">
         <table id="list2" class="scroll jqTable" cellpadding="0" cellspacing="0"></table>
         <div id="pager2" class="scroll" style="text-align:center;"></div>
@@ -125,8 +143,8 @@
                 viewrecords: true,
                 sortorder: "desc",
                 multiselect: false,
-    //            shrinkToFit:false,
-    //            width: 1024,
+                shrinkToFit:false,
+                width: 1024,
                 height: "100%",
                 caption:"Incidents",
                 subGrid : true,
