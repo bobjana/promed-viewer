@@ -14,7 +14,7 @@
 
         function referenceFormatter(cellvalue, options, rowObject) {
             var ref = rowObject[0]
-            var email = rowObject[11]
+            var email = rowObject[12]
             return "<a href='mailto:" + email + "?subject=" + ref + "'>" + ref + "</a>"
         }
 
@@ -191,7 +191,13 @@
              </table>
          </div>
          <script type="text/javascript">
-            $('#jqdlgCustomer').dialog({ autoOpen: false, bgiframe: true, resizable: true, title: 'Customer Details', width: 400});
+            $('#jqdlgCustomer').dialog({
+                autoOpen: false,
+                bgiframe: true,
+                resizable: true,
+                title: 'Customer Details',
+                width: 400
+            });
          </script>
 
          %{--ATTACHMENTS DIALOG--}%
