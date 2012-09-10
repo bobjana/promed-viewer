@@ -1,3 +1,6 @@
+import org.apache.log4j.FileAppender
+import org.apache.log4j.RollingFileAppender
+
 // locations to search for config files that get merged into the main config
 // config files can either be Java properties files or ConfigSlurper scripts
 
@@ -14,9 +17,9 @@
 grails.config.locations = [ "classpath:viewer-config.properties",
                            "file:${userHome}/viewer-config.properties"]
 
-def tomcat_dir = System.getenv("CATALINA_HOME")
-if (tomcat_dir){
-    def configFile = new File(tomcat_dir,"conf/viewer-config.properties")
+def catalinaBase = System.properties.getProperty('catalina.base')
+if (catalinaBase){
+    def configFile = new File(catalinaBase,"conf/viewer-config.properties")
     if (configFile.exists()){
         println "Using tomcat '${configFile}' conf file to configure viewer"
         grails.config.locations << "file:" + configFile.getAbsolutePath()
@@ -74,43 +77,53 @@ environments {
     }
     production {
         grails.logging.jul.usebridge = false
-        grails.serverURL = "http://www.changeme.com"
+//        grails.serverURL = "http://localhost/viewer"
 
-        grails.plugins.springsecurity.portMapper.httpPort = "80"
-        grails.plugins.springsecurity.portMapper.httpsPort = "443"
+        grails.plugins.springsecurity.portMapper.httpPort = "8080"
+        grails.plugins.springsecurity.portMapper.httpsPort = "8443"
 		grails.plugins.springsecurity.secureChannel.definition = ['/**': 'REQUIRES_SECURE_CHANNEL']
     }
 }
 
 // log4j configuration
+
+if (!catalinaBase) catalinaBase = './target'   // just in case
+def logDirectory = "${catalinaBase}${File.separator}logs"
+println "Log Directory: ${logDirectory}"
+
 log4j = {
-    // Example of changing the log pattern for the default console
-    // appender:
-    //
-    appenders {
-        console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
+    def rollingFile = new RollingFileAppender(name: "rollingFile",
+                maxFileSize: 100*1024*1024,
+                file: "${logDirectory}${File.separator}viewer.log",
+                layout: pattern(conversionPattern: '%c{2} %m%n'))
+	appenders {
+		'null' name: 'stacktrace'
+        console name: 'stdout', layout: pattern(conversionPattern: '%c{2} %m%n')
+        appender rollingFile
     }
 
-    root {
-		error 'stdout'
+	root {
+		info 'rollingFile'
 		additivity = true
 	}
 
-    error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
-           'org.codehaus.groovy.grails.web.pages', //  GSP
-           'org.codehaus.groovy.grails.web.sitemesh', //  layouts
-           'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
-           'org.codehaus.groovy.grails.web.mapping', // URL mapping
-           'org.codehaus.groovy.grails.commons', // core / classloading
-           'org.codehaus.groovy.grails.plugins', // plugins
-           'org.codehaus.groovy.grails.orm.hibernate', // hibernate integration
-           'org.springframework',
-           'org.hibernate',
-           'net.sf.ehcache.hibernate'
+	error stdout: "StackTrace"
 
-    warn   'org.mortbay.log'
+	error 'org.codehaus.groovy.grails.web.servlet',  //  controllers
+			'org.codehaus.groovy.grails.web.pages', //  GSP
+			'org.codehaus.groovy.grails.web.sitemesh', //  layouts
+			'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
+			'org.codehaus.groovy.grails.web.mapping', // URL mapping
+			'org.codehaus.groovy.grails.commons', // core / classloading
+			'org.codehaus.groovy.grails.plugins', // plugins
+			'org.codehaus.groovy.grails.orm.hibernate', // hibernate integration
+			'org.springframework',
+			'org.hibernate',
+			'net.sf.ehcache.hibernate'
 
-    info   'org.hibernate'
+	warn 'org.mortbay.log'
+
+	info rollingFile: 'grails.app.controller'
 }
 
 grails.plugins.springsecurity.userLookup.userDomainClassName = 'User'
