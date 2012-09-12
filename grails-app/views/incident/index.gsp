@@ -79,14 +79,6 @@
             padding-top: 2px;
         }
 
-        .ui-dialog-title {
-            font-size: 0.7em;
-        }
-
-        .ui-dialog-titlebar{
-            padding: 0px;
-        }
-
         .content {
             background-repeat: no-repeat;
             background-image: -moz-linear-gradient(center top, #DBEEFC, #FFF);
@@ -94,11 +86,7 @@
             filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#DBEEFC', endColorstr='#FFFFFF');
             padding-top: 15px;
             min-height: 100%;
-        }
-
-        .ui-jqgrid {
-            margin-left: auto;
-            margin-right: auto;
+            /*margin-right: 20px;*/
         }
 
 
@@ -143,8 +131,9 @@
                 viewrecords: true,
                 sortorder: "desc",
                 multiselect: false,
-                shrinkToFit:false,
-                width: 1024,
+//                shrinkToFit:true,
+//                width: "1024",
+                autowidth: true,
                 height: "100%",
                 caption:"Incidents",
                 subGrid : true,
