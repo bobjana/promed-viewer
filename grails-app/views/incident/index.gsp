@@ -19,8 +19,21 @@
         }
 
         function customerFormatter(cellvalue, options, rowObject) {
-            customerDetailMap[options.rowId] = [rowObject[9],rowObject[13],rowObject[14],rowObject[15],rowObject[16],rowObject[17]]
+            customerDetailMap[options.rowId] = [rowObject[10],rowObject[13],rowObject[14],rowObject[15],rowObject[16],rowObject[17]]
             return "<a href='' onclick='showCustomerDialog(this," + options.rowId + ");return false;'>" + cellvalue + "</a>"
+
+//            var hasData = false
+//            for (var i = 0; i < customerDetailMap[options.rowId].length; i++) {
+//                if (customerDetailMap[options.rowId][i] != ""){
+//                    hasData = true
+//                    break
+//                }
+//            }
+//            if (hasData){
+//                return "<a href='' onclick='showCustomerDialog(this," + options.rowId + ");return false;'>" + cellvalue + "</a>"
+//            }
+//            return cellvalue
+
         }
 
         function attachmentFormatter(cellvalue, options, rowObject) {
