@@ -108,8 +108,9 @@
 <div class="nav" role="navigation">
     <div class="navContent">
         <g:form method="post" controller="incident" action="toggleShowAll" name="toggleForm">
-            <g:checkBox name="showAll" checked="${session.showAll}" onclick="toggleShowAll()" value="Show All"/> Show All
+            <g:checkBox name="showAll" checked="${"true".equals(cookie.get(['name':'showAll']).toString())}" onclick="toggleShowAll()" value="Show All"/> Show All
         </g:form>
+        %{--<cookie:get name="showAll"/>--}%
     </div>
 </div>
 
@@ -118,6 +119,9 @@
         <div id="pager2" class="scroll" style="text-align:center;"></div>
 
         <script type="text/javascript">// <![CDATA[
+            var maxRows = ${cookie.get(['name':'maxRows'])}
+            maxRows = ${(maxRows==''?10:maxRows)}
+
             $("#list2").jqGrid({
                 url:'incident/jq_incident_list',
                 datatype: "json",
@@ -137,7 +141,7 @@
                     {name:'agent',index:'agent', width:100},
                     {name:'attachment',index:'attachment', width:80, formatter: attachmentFormatter}
                 ],
-                rowNum:10,
+                rowNum: maxRows,
                 rowList:[10,20,50],
                 pager: '#pager2',
                 sortname: 'id',
@@ -153,10 +157,24 @@
                 subGridUrl: 'incident/jq_incidentlog_list',
                 subGridModel: [
                     { name  : ['Date','Resolution','Type','Agent'], width : [55,200,80,80] }
-                ]
+                ],
+                onPaging: function(pageEventType) {
+                    if (pageEventType == 'records'){
+                        $("#list2").setGridParam({
+                            postData: { resetMaxRows: true }
+                        }).trigger('reloadGrid');
+                    }
+                }
             });
+
             $("#list2").filterToolbar({autosearch:true });
-            $("#list2").jqGrid('navGrid', '#pager2', {edit:false,add:false,del:false,search:false});
+
+            $("#list2").jqGrid('navGrid', '#pager2', {
+                edit:false,
+                add:false,
+                del:false,
+                search:false
+            });
 
             // ]]>
         </script>

@@ -8,8 +8,6 @@ class IncidentController {
     static def df = new SimpleDateFormat("yyyy-MM-dd")
     static def ldf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
     def springSecurityService
-    def dataSource
-
 
     def index() {
     }
@@ -24,6 +22,11 @@ class IncidentController {
         def incidents = listIncidents(maxRows, rowOffset, sortIndex, sortOrder)
         def totalRows = incidents.totalCount
         def numberOfPages = Math.ceil(totalRows / maxRows)
+
+        if (params.resetMaxRows){
+            response.setCookie("maxRows","${maxRows}",604800)
+            println "new max rows: ${maxRows}"
+        }
 
         def jsonCells = incidents.collect {
             [cell:
@@ -68,14 +71,15 @@ class IncidentController {
         render jsonData as JSON
     }
 
-
     def toggleShowAll() {
-        if (!session.showAll) {
-            session["showAll"] = true
+        def currentShowAll = request.getCookie("showAll")
+        if (currentShowAll == null || "false".equals(currentShowAll.toString())){
+            currentShowAll = "true";
         }
-        else {
-            session["showAll"] = false
+        else{
+            currentShowAll = "false";
         }
+        response.setCookie("showAll",currentShowAll,604800)
         redirect(uri: "/incident")
     }
 
@@ -91,7 +95,7 @@ class IncidentController {
         def criteria = Incident.createCriteria()
         def query = {
             eq('worker', springSecurityService.getCurrentUser().fullName)
-            if (!session.showAll) {
+            if ("false".equals(request.getCookie("showAll").toString())) {
                 ne('statusId', '3')
             }
             if (params.reference)
