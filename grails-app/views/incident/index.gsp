@@ -98,6 +98,8 @@
             background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #DBEEFC), color-stop(1, #fff));
             filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#DBEEFC', endColorstr='#FFFFFF');
             padding-top: 15px;
+            padding-right: 20px;
+            padding-left: 20px;
             min-height: 100%;
             /*margin-right: 20px;*/
         }
